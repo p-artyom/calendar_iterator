@@ -23,18 +23,15 @@ class CalendarIterator:
         return self
 
     def __next__(self):
-        if (
-            self.num_days <= self.DAYS[-1]
-            and self.num_month != self.LAST_MONTH
-        ):
-            if self.num_days > self.DAYS[self.num_month]:
-                self.num_days = 1
-                self.num_month += 1
-            day = self.num_days
-            month = self.MONTH[self.num_month]
-            self.num_days += 1
-            return f'{day} {month}'
-        raise StopIteration
+        if self.num_days > self.DAYS[-1] and self.num_month == self.LAST_MONTH:
+            raise StopIteration
+        if self.num_days > self.DAYS[self.num_month]:
+            self.num_days = 1
+            self.num_month += 1
+        day = self.num_days
+        month = self.MONTH[self.num_month]
+        self.num_days += 1
+        return f'{day} {month}'
 
 
 if __name__ == '__main__':
